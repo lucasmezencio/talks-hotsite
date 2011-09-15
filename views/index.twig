@@ -1,0 +1,151 @@
+{% extends "layout.twig" %}
+{% block title %}{{ current.id }}º PHPMG Talks{% endblock %}
+
+{% block slideshow %}
+    {% if slideshow %} 
+        <section id="normalheader">
+            {% for image in slideshow %}
+                <img src="{{ image }}" width="615" height="150" />
+            {% endfor %}
+        </section> 
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="mainheading">{{ current.id }}º PHPMG Talks</h2>
+    <ul class="summary">
+        {% if current.subject %}
+            <li><a href="#tema">Tema</a></li>
+        {% endif %}
+        <li><a href="#quando">Quando</a></li>
+        <li><a href="#programacao">Programação</a></li>
+        <li><a href="#investimento">Investimento</a></li>
+        <li><a href="#onde">Onde</a></li>
+        <li><a href="#mapa">Como Chegar</a></li>
+        <li><a href="#inscricoes">Inscrições</a></li>
+        <li><a href="#comentarios">Comentários</a></li>
+    </ul>
+
+    {% if current.subject %}
+    <article class="post"> 
+        <h2 id="tema">Tema</h2>
+        <p>{{ current.subject|nl2br }}</p>
+    </article>
+    {% endif %}
+    
+    <article class="post"> 
+        <h2 id="quando">Quando</h2>
+        <p>Dia: <strong>{{ current.date|date('d/m/Y') }}</strong></p>
+        <p>
+            {% if countdown > 0 %}
+                {% if countdown == 1 %}
+                    É amanhã!
+                {% else %}
+                    Faltam {{ countdown * 1 }} dias.
+                {% endif %}
+            {% else %}
+                {% if countdown == -1 %}
+                    Foi ontem.
+                {% else %}
+                    Foi há {{ countdown * -1 }} dias.
+                {% endif %}
+            {% endif %}
+        </p>        
+    </article>
+    
+    <h2 id="programacao">Programação</h2>
+    {% if talks %}
+        {% for talk in talks %}
+            <article class="post">
+                <header>
+                    {% if talk.email %}<img src="{{ talk.email|gravatar(85) }}" align="right" />{% endif %}
+                    <h3>{{ talk.time|date('H\\hi') }} - {{ talk.title }}</h3>                
+                    {% if talk.author %}<p class="postinfo">Por {{ talk.author }}</p>{% endif %}
+                </header>
+                <p>
+                    {{ talk.excerpt }} <br />
+                    {% if talk.content %}
+                        <a href="/talk/{{ talk.id }}?KeepThis=true&TB_iframe=true&height=540&width=650" class="thickbox">Veja Mais</a>
+                    {% endif %}
+                </p>            
+                <footer></footer>
+            </article>
+        {% endfor %}
+    {% else %}
+        <article class="post">
+            <p>Aguarde!</p>
+            <p>Em breve disponibilizaremos a programação completa.</p>
+        </article>        
+    {% endif %}
+    
+    <article class="post"> 
+        <h2 id="investimento">Investimento</h2>
+        <p>{{ current.price|nl2br }}</p>
+    </article>
+    
+    <article class="post"> 
+        <h2 id="onde">Onde</h2>
+        <p>Local: <strong>{{ current.place|nl2br }}</strong></p>
+        <p>Endereço: <strong>{{ current.address|nl2br }}</strong></p>     
+    </article>
+    
+    <article class="post"> 
+        <h2 id="mapa">Como Chegar</h2>
+        {{ current.map|nl2br }}   
+    </article>
+    
+    <article class="post"> 
+        <h2 id="inscricoes">Inscrições</h2>
+        <p>{{ current.registration|nl2br }}</p>
+    </article>
+    
+    <article class="post"> 
+        <h2 id="comentarios">Comentários</h2>
+        <div id="fb-root"></div>
+        <script>(function(d){
+          var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+          js = d.createElement('script'); js.id = id; js.async = true;
+          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+          d.getElementsByTagName('head')[0].appendChild(js);
+        }(document));</script>
+        <div class="fb-comments" data-href="{{ permalink }}" data-num-posts="5" data-width="595"></div>
+    </article>
+    
+{% endblock %}
+
+{% block sidebar %}
+    <h2>O que é?</h2>
+    <p>Um encontro informal para curtas apresentações e debates técnicos sobre PHP e qualquer tecnologia relacionada ao universo do PHP. O evento é aberto a comunidade e qualquer um está convidado a trazer um tema para apresentar para a comunidade.</p>
+
+    <h2>Edições</h2>
+    {% if editions %}
+    <ul>
+        {% for edition in editions %}        
+            {% if edition.id == current.id %}
+                <li class="current">{{ edition.id }}º PHPMG Talks - {{ edition.date|date('d/m/Y') }}</li>
+            {% else %}
+                <li><a href="/edition/{{ edition.id }}">{{ edition.id }}º PHPMG Talks - {{ edition.date|date('d/m/Y') }}</a></li>
+            {% endif %}
+        {% endfor %}        
+    </ul>
+    {% else %}
+    <ul>
+        <li>Nenhuma edição anterior</li>
+    </ul>
+    {% endif %}
+    
+    <div class="clear"></div>
+    {% if sponsors %}
+    <h2>Apoio</h2>    
+    <!-- ul class="sponsors" -->
+        {% for sponsor in sponsors %}        
+            <a href="{{ sponsor.link }}" target="_BLANK" title="{{ sponsor.name }}">
+	        <img src="{{ sponsor.logo }}" alt="{{ sponsor.name }}" />
+	    </a>
+	    <br />
+        {% endfor %}        
+    <!-- /ul -->
+    {% endif %}
+
+{% endblock %}
