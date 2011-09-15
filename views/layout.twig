@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8" />
+        <meta property="fb:admins" content="1220885839, 690885138"/>
+        <title>{% block title %}{% endblock %}</title>
+        <link href="/static/style.css" rel="stylesheet" type="text/css">
+        <link href="/static/css/thickbox.css" rel="stylesheet" type="text/css">
+        <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!--[if IE 6]>
+        <script src="/static/js/belatedPNG.js"></script>
+        <script>
+                DD_belatedPNG.fix('*');
+        </script>
+        <![endif]-->
+        <script src="/static/js/jquery-1.4.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/jquery.cycle.all.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(function(){
+                $('#normalheader').cycle({ fx: 'fade', speed: 4500 });
+            });
+        </script>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-25672898-1']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
+
+    <body>
+        <div id="bodywrap">
+            <header id="pageheader">
+                <h1>
+                    talks<span>phpmg</span>
+                </h1>
+            </header>
+            <div id="contents">
+
+                <section id="main">
+                    {% block slideshow %}{% endblock %}                        
+                    <div id="leftcontainer">
+                        {% block content %}{% endblock %}
+                    </div>
+                </section>
+                <section id="sidebar">
+                    <div id="sidebarwrap">
+                        {% block sidebar %}{% endblock %}
+                    </div>
+                </section>
+
+                <div class="clear"></div>
+            </div>
+
+        </div>
+        <footer id="pagefooter">
+            <div id="footerwrap">
+                <div class="copyright">
+                    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+                        <img alt="Licença Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a>
+                        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Atribuição-Uso não-comercial-Compartilhamento pela mesma licença 3.0 Unported License</a>.
+                </div>
+                <div class="credit">
+                    Template by <a href="http://cssheaven.org">CSSHeaven.org</a><br />
+                    Powered by <a href="http://silex.sensiolabs.org/">Silex Micro-Framework</a>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
